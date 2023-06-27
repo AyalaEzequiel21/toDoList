@@ -3,6 +3,7 @@ package com.example.To.Do.list.Model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Table
@@ -19,11 +20,11 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, List<Task> tasks) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
         this.registerDate = LocalDate.now();
-        this.tasks = tasks;
+        this.tasks = new ArrayList<>();
     }
 
     public Long getId() {
