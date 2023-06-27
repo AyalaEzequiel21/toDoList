@@ -7,6 +7,7 @@ public class UserDTO {
     private Long id;
     private String email;
     private String password;
+    private LocalDate registerDate;
     private List<TaskDTO> tasks;
 
     public Long getId() {
@@ -31,6 +32,14 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public LocalDate getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(LocalDate registerDate) {
+        this.registerDate = registerDate;
     }
 
     public List<TaskDTO> getTasks() {

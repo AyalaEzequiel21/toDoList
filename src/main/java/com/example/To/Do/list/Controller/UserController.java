@@ -22,9 +22,9 @@ public class UserController {
         return this.userService.findAllUser();
     }
 
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<Object> getUserById(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.userService.findUserById(id);
+    @GetMapping(path = "/{email}")
+    public ResponseEntity<Object> getUserByEmail(@PathVariable String email) throws ResourceNotFoundException {
+        return this.userService.findUserByEmail(email);
     }
 
     @PostMapping

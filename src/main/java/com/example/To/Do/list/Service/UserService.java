@@ -58,14 +58,15 @@ public class UserService implements IUserService{
         user = objectMapper.convertValue(userDTO, User.class);
         datos.put("message", "El usuario se registro con exito.");
         userRepository.save(user);
-        datos.put("data", userDTO);
+        Optional<User> userSaved = userRepository.findUserByEmail(user.getEmail());
+        datos.put("data", userSaved);
         return new ResponseEntity<>(datos, HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Object> findUserById(Long id) throws ResourceNotFoundException {
+    public ResponseEntity<Object> findUserByEmail(String email) throws ResourceNotFoundException {
         datos = new HashMap<>();
-        Optional<User> user = userRepository.findById(id);
+        Optional<User> user = userRepository.findUserByEmail(email);
         UserDTO userDto;
         if (!user.isPresent()){
             throw new ResourceNotFoundException("Este usuario no se eencuentra registrado.");
