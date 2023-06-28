@@ -27,12 +27,8 @@ public class UserService implements IUserService{
     ObjectMapper objectMapper;
 
     public boolean isEmailRegistered(String email){
-        List<User> users = userRepository.findAll();
-        for (User user : users){
-            if (user.getEmail().equals(email)){
-                return true;
-            }
-        }
+        Optional<User> user = userRepository.findUserByEmail(email);
+
         return false;
     }
 
@@ -68,7 +64,7 @@ public class UserService implements IUserService{
         datos = new HashMap<>();
         Optional<User> user = userRepository.findUserByEmail(email);
         UserDTO userDto;
-        if (!user.isPresent()){
+        if (user.isEmpty()){
             throw new ResourceNotFoundException("Este usuario no se eencuentra registrado.");
         }
         userDto = objectMapper.convertValue(user, UserDTO.class);
@@ -94,7 +90,7 @@ public class UserService implements IUserService{
     public ResponseEntity<Object> deleteUser(Long id) throws ResourceNotFoundException {
         datos = new HashMap<>();
         Optional<User> user = userRepository.findById(id);
-        if (!user.isPresent()){
+        if (user.isEmpty()){
             throw new ResourceNotFoundException("El usuario ingresado no se encuentra registrado.");
         }
         userRepository.deleteById(id);
