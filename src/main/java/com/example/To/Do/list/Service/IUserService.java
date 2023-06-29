@@ -1,16 +1,14 @@
 package com.example.To.Do.list.Service;
 
 import com.example.To.Do.list.Dto.UserDTO;
-import com.example.To.Do.list.Exception.ResourceNotFoundException;
-import com.example.To.Do.list.Exception.ResourseRepeatException;
+import com.example.To.Do.list.Model.User;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
 
 public interface IUserService {
-    public ResponseEntity<Object> findAllUser();
-    public ResponseEntity<Object> registerUser(UserDTO userDTO) throws ResourseRepeatException;
-    public ResponseEntity<Object> findUserByEmail(String email) throws ResourceNotFoundException;
-    public ResponseEntity<Object> updateUser(UserDTO userDTO) throws ResourceNotFoundException;
-    public ResponseEntity<Object> deleteUser(Long id) throws ResourceNotFoundException;
+    User registerUser(UserDTO userdto);
+    ResponseEntity<Object> findAllUser();
+    ResponseEntity<Object> findUserById(Long id);
+    ResponseEntity<Object> updateUser(UserDTO userDTO);
+    ResponseEntity<Object> deleteUserById(Long id);
 }

@@ -18,6 +18,7 @@ public class User {
     private List<Task> tasks;
 
     public User() {
+        this.registerDate = LocalDate.now();
     }
 
     public User(String email, String password) {
