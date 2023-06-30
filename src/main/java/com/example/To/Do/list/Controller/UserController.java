@@ -31,7 +31,7 @@ public class UserController {
         try{
             return userService.findUserById(id);
         } catch (ResourceNotFoundException e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
 
     }
@@ -45,15 +45,23 @@ public class UserController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
-//
-//    @PutMapping
-//    public ResponseEntity<Object> updateUser(@RequestBody UserDTO user) throws ResourceNotFoundException {
-//        return this.userService.updateUser(user);
-//    }
-//
-//    @DeleteMapping(path = "/{id}")
-//    public ResponseEntity<Object> deleteUser(@PathVariable Long id) throws ResourceNotFoundException {
-//        return this.userService.deleteUser(id);
-//    }
+
+    @PutMapping
+    public ResponseEntity<Object> updateUser(@RequestBody UserDTO userDTO){
+        try{
+            return this.userService.updateUser(userDTO);
+        } catch (ResourceNotFoundException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Object> deleteUser(@PathVariable Long id){
+        try{
+            return this.userService.deleteUserById(id);
+        } catch (ResourceNotFoundException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 
 }

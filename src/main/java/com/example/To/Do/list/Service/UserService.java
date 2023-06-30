@@ -64,15 +64,27 @@ public class UserService implements IUserService{
 
     @Override
     public ResponseEntity<Object> updateUser(UserDTO userDTO) {
-        String email = userDTO.getEmail();
-        if(userRepository.existsByEmail(email)){
+        datos = new HashMap<>();
+        Optional<User> user = userRepository.findById(userDTO.getId());
+        if(user.isEmpty()){
             throw new ResourceNotFoundException("Este usuario no existe.");
         }
-        return null;
+        User newUser = objectMapper.convertValue(userDTO, User.class);
+        userRepository.save(newUser);
+        datos.put("message", "El usuario ha sido actualizado");
+        datos.put("data", newUser);
+        return new ResponseEntity<>(datos, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> deleteUserById(Long id) {
-        return null;
+        datos = new HashMap<>();
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()){
+            throw new ResourceNotFoundException("El usuario ingresado no existe.");
+        }
+        userRepository.deleteById(id);
+        datos.put("message", "El usuario ha sido eliminado.");
+        return new ResponseEntity<>(datos, HttpStatus.ACCEPTED);
     }
 }
