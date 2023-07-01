@@ -5,6 +5,8 @@ import java.time.LocalDate;
 public class TaskDTO {
     private Long id;
     private UserDTO user;
+    private String title;
+    private LocalDate registerDate;
     private LocalDate limitDate;
     private Integer priority;
     private String description;
@@ -23,6 +25,22 @@ public class TaskDTO {
 
     public void setUser(UserDTO user) {
         this.user = user;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public LocalDate getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(LocalDate registerDate) {
+        this.registerDate = registerDate;
     }
 
     public LocalDate getLimitDate() {

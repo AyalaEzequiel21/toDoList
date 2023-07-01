@@ -13,6 +13,7 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    private String title;
     @CreationTimestamp
     private LocalDate registerDate;
     private LocalDate limitDate;
@@ -22,7 +23,9 @@ public class Task {
     public Task() {
     }
 
-    public Task(User user, LocalDate limitDate, Integer priority, String description) {
+    public Task(User user, String title, LocalDate limitDate, Integer priority, String description) {
+        this.user = user;
+        this.title = title;
         this.limitDate = limitDate;
         this.priority = priority;
         this.description = description;
@@ -42,6 +45,14 @@ public class Task {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public LocalDate getRegisterDate() {

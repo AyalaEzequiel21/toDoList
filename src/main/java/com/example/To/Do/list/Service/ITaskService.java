@@ -8,7 +8,6 @@ import java.util.List;
 public interface ITaskService {
     public TaskDTO registerTask(TaskDTO taskDTO);
     public ResponseEntity<Object> findAllTasks();
-    public ResponseEntity<Object> findTaskById(Long id);
     public ResponseEntity<Object> updateTask(TaskDTO taskDTO);
     public ResponseEntity<Object> deleteTask(Long id);
 }
