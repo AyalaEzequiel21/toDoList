@@ -1,6 +1,7 @@
 package com.example.To.Do.list.Model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,19 +14,18 @@ public class User {
     private Long id;
     private String email;
     private String password;
+    @CreationTimestamp
     private LocalDate registerDate;
     @OneToMany(mappedBy = "user")
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 
     public User() {
-        this.registerDate = LocalDate.now();
+        this.tasks = new ArrayList<>();
     }
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.registerDate = LocalDate.now();
-        this.tasks = new ArrayList<>();
     }
 
     public Long getId() {

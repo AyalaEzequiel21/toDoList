@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ITaskService {
-    public List<TaskDTO> findAllTasks();
-    public ResponseEntity<Object> registerTask(TaskDTO taskDTO);
-    public TaskDTO findTaskById(Long id);
+    public TaskDTO registerTask(TaskDTO taskDTO);
+    public ResponseEntity<Object> findAllTasks();
+    public ResponseEntity<Object> findTaskById(Long id);
     public ResponseEntity<Object> updateTask(TaskDTO taskDTO);
     public ResponseEntity<Object> deleteTask(Long id);
 }

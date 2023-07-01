@@ -1,6 +1,7 @@
 package com.example.To.Do.list.Dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDTO {
@@ -8,7 +9,7 @@ public class UserDTO {
     private String email;
     private String password;
     private LocalDate registerDate;
-    private List<TaskDTO> tasks;
+    private List<TaskDTO> tasks= new ArrayList<>();
 
     public Long getId() {
         return id;

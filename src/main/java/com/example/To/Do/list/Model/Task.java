@@ -1,6 +1,7 @@
 package com.example.To.Do.list.Model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 @Entity
@@ -12,6 +13,7 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @CreationTimestamp
     private LocalDate registerDate;
     private LocalDate limitDate;
     private Integer priority;
@@ -21,7 +23,6 @@ public class Task {
     }
 
     public Task(User user, LocalDate limitDate, Integer priority, String description) {
-        this.registerDate = LocalDate.now();
         this.limitDate = limitDate;
         this.priority = priority;
         this.description = description;

@@ -28,14 +28,13 @@ public class UserService implements IUserService{
     ObjectMapper objectMapper;
 
     @Override
-    public User registerUser(UserDTO userdto) {
+    public UserDTO registerUser(UserDTO userdto) {
         if(userRepository.existsByEmail(userdto.getEmail())){
             throw new ResourseRepeatException("Este correo electronico ya se encuentra registrado.");
         }
         User user = objectMapper.convertValue(userdto, User.class);
-        user.setRegisterDate(LocalDate.now());
-        user.setTasks(new ArrayList<>());
-        return userRepository.save(user);
+        User userSaved = userRepository.save(user);
+        return objectMapper.convertValue(userSaved, UserDTO.class);
     }
 
     @Override
