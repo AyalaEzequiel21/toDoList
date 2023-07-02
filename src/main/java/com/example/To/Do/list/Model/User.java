@@ -20,7 +20,6 @@ public class User {
     private List<Task> tasks = new ArrayList<>();
 
     public User() {
-        this.tasks = new ArrayList<>();
     }
 
     public User(String email, String password) {

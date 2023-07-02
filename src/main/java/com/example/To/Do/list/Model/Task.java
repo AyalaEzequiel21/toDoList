@@ -2,8 +2,8 @@ package com.example.To.Do.list.Model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDate;
+
 @Entity
 @Table
 public class Task {

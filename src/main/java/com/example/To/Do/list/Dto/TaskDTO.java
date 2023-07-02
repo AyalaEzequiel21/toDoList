@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class TaskDTO {
     private Long id;
-    private UserDTO user;
+    private UserDTO userDTO;
     private String title;
     private LocalDate registerDate;
     private LocalDate limitDate;
@@ -20,11 +20,11 @@ public class TaskDTO {
     }
 
     public UserDTO getUser() {
-        return user;
+        return userDTO;
     }
 
-    public void setUser(UserDTO user) {
-        this.user = user;
+    public void setUser(UserDTO userDTO) {
+        this.userDTO = userDTO;
     }
 
     public String getTitle() {

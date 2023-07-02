@@ -6,6 +6,7 @@ import com.example.To.Do.list.Exception.ResourseRepeatException;
 import com.example.To.Do.list.Model.Task;
 import com.example.To.Do.list.Model.User;
 import com.example.To.Do.list.Repository.TaskRepository;
+import com.example.To.Do.list.Repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,10 @@ public class TaskService implements ITaskService{
     HashMap<String, Object> datos;
     @Autowired
     TaskRepository taskRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
     @Autowired
     ObjectMapper objectMapper;
 
@@ -30,9 +35,8 @@ public class TaskService implements ITaskService{
         if (taskRepository.existsByDescription(taskDTO.getDescription()) || taskRepository.existsByTitle(taskDTO.getTitle())){
             throw new ResourseRepeatException("Ya tienes creada una tarea con un titulo igual o una misma descripcion.");
         }
-        User user = objectMapper.convertValue(taskDTO.getUser(), User.class);
         Task task = objectMapper.convertValue(taskDTO, Task.class);
-        task.setUser(user);
+        task.setUser(objectMapper.convertValue(taskDTO.getUser(), User.class));
         Task taskSaved = taskRepository.save(task);
         return objectMapper.convertValue(taskSaved, TaskDTO.class);
     }
