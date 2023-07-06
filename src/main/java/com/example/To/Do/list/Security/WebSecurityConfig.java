@@ -1,5 +1,6 @@
 package com.example.To.Do.list.Security;
 
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,14 +14,23 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+//import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@AllArgsConstructor
 public class WebSecurityConfig {
+
+    private final UserDetailsService userDetailsService;
+    private final JwtAuthorizationFilter jwtAuthFilter;
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity, AuthenticationManager authManager) throws Exception {
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();
+        jwtAuthenticationFilter.setAuthenticationManager(authManager);
+        jwtAuthenticationFilter.setFilterProcessesUrl("/login");
+
         httpSecurity
                 .csrf((csrf) ->
                         csrf.disable()
@@ -34,25 +44,17 @@ public class WebSecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement((man) -> man
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+                )
+                .addFilter(jwtAuthenticationFilter)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
                 return httpSecurity.build();
     }
 
-    @Bean
-    UserDetailsService userDetailsService(){
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("admin")
-                .password(passwordEncoder().encode("admin"))
-                .roles()
-                .build()
-        );
-        return manager;
-    }
 
     @Bean
     DaoAuthenticationProvider authProvider(){
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
@@ -68,4 +70,5 @@ public class WebSecurityConfig {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
