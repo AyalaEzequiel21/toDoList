@@ -9,6 +9,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableWebSecurity
 @AllArgsConstructor
 public class WebSecurityConfig {
 
@@ -36,12 +38,11 @@ public class WebSecurityConfig {
                         csrf.disable()
                 )
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/signup").permitAll()
-                        .requestMatchers("/login").permitAll()
+//                        .requestMatchers("/signup").permitAll()
+//                        .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated()
 
                 )
-                .httpBasic(Customizer.withDefaults())
                 .sessionManagement((man) -> man
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
@@ -71,4 +72,7 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+//    public static void main(String[] args) {
+//        System.out.println("pass: " + new BCryptPasswordEncoder().encode("superusuario"));
+//    }
 }
