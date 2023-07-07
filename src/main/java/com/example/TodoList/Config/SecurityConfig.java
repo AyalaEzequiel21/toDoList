@@ -16,7 +16,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/toDoList/V1/users").permitAll();
                     auth.anyRequest().authenticated();
-                }) 
+                })
                 .formLogin().permitAll()
                 .and()
                 .build();
