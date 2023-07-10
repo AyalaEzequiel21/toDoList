@@ -14,7 +14,7 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
+    @ExceptionHandler(ResourceRepeatException.class)
     public ResponseEntity<ErrorResponseException> handleResourceRepeatException(ResourceRepeatException ex){
         ErrorResponseException errorResponse = new ErrorResponseException(HttpStatus.ALREADY_REPORTED, ex);
         return new ResponseEntity<>(errorResponse, HttpStatus.ALREADY_REPORTED);
