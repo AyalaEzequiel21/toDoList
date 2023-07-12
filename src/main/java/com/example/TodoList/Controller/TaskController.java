@@ -4,6 +4,7 @@ import com.example.TodoList.Dto.TaskDto;
 import com.example.TodoList.Exception.ResourceNotFoundException;
 import com.example.TodoList.Exception.ResourceRepeatException;
 import com.example.TodoList.Service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createTask(@RequestBody TaskDto taskDto){
+    public ResponseEntity<Object> createTask(@Valid @RequestBody TaskDto taskDto){
         try{
             TaskDto registerTask = taskService.registerTask(taskDto);
             return new ResponseEntity<>(registerTask, HttpStatus.CREATED);
@@ -34,7 +35,7 @@ public class TaskController {
     }
 
     @PutMapping
-    public ResponseEntity<Object> updateTask(@RequestBody TaskDto taskDto){
+    public ResponseEntity<Object> updateTask(@Valid @RequestBody TaskDto taskDto){
         try{
             return this.taskService.updateTask(taskDto);
         }catch (ResourceNotFoundException e) {

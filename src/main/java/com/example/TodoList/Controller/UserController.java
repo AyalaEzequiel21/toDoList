@@ -4,6 +4,7 @@ import com.example.TodoList.Dto.UserDto;
 import com.example.TodoList.Exception.ResourceNotFoundException;
 import com.example.TodoList.Exception.ResourceRepeatException;
 import com.example.TodoList.Service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class UserController {
     }
     //
     @PostMapping
-    public ResponseEntity<Object> registerUser(@RequestBody UserDto userDto){
+    public ResponseEntity<Object> registerUser(@Valid  @RequestBody UserDto userDto){
         try {
             UserDto registeredUser = userService.registerUser(userDto);
             return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<Object> updateUser(@RequestBody UserDto userDto){
+    public ResponseEntity<Object> updateUser(@Valid @RequestBody UserDto userDto){
         try{
             return this.userService.updateUser(userDto);
         } catch (ResourceNotFoundException e){
