@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
-//        jwtAuthenticationFilter.setFilterProcessesUrl("/nuevoUrl");     ESTO SIRVE PARA MODIFICAR EL URL QUE VIENE X DEFECTO (/login)
+        jwtAuthenticationFilter.setFilterProcessesUrl("/toDoList/V1/login");     //ESTO SIRVE PARA MODIFICAR EL URL QUE VIENE X DEFECTO (/login)
 
         return httpSecurity
                 .authorizeHttpRequests(auth -> {
