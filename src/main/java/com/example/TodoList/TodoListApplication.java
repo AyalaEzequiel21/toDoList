@@ -31,7 +31,7 @@ public class TodoListApplication {
 		return args -> {
 			User user = User.builder()
 					.email("ezequiel@mail.com")
-					.password(passwordEncoder.encode("daleboca10"))
+					.password(passwordEncoder.encode("daleboca"))
 					.roles(Set.of(Role.builder().name(ERole.valueOf(ERole.ADMIN.name())).build()))
 					.build();
 

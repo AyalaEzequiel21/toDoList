@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -14,5 +13,5 @@ public class UserDto {
     private String email;
     private String password;
     private LocalDate registerDate;
-    private Set<TaskDto> tasks = new HashSet<>();
+    private Set<TaskDto> tasks;
 }
