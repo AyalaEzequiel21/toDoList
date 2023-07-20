@@ -20,22 +20,22 @@ public class TodoListApplication {
 		SpringApplication.run(TodoListApplication.class, args);
 	}
 
-	@Autowired
-	PasswordEncoder passwordEncoder;
-
-	@Autowired
-	UserRepository userRepository;
-
-	@Bean
-	CommandLineRunner init(){
-		return args -> {
-			User user = User.builder()
-					.email("ezequiel@mail.com")
-					.password(passwordEncoder.encode("daleboca"))
-					.roles(Set.of(Role.builder().name(ERole.valueOf(ERole.ADMIN.name())).build()))
-					.build();
-
-			userRepository.save(user);
-		};
-	}
+//	@Autowired
+//	PasswordEncoder passwordEncoder;
+//
+//	@Autowired
+//	UserRepository userRepository;
+//
+//	@Bean
+//	CommandLineRunner init(){
+//		return args -> {
+//			User user = User.builder()
+//					.email("ezequiel@mail.com")
+//					.password(passwordEncoder.encode("daleboca"))
+//					.roles(Set.of(Role.builder().name(ERole.valueOf(ERole.ADMIN.name())).build()))
+//					.build();
+//
+//			userRepository.save(user);
+//		};
+//	}
 }

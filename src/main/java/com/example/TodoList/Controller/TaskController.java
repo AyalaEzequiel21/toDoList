@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/v1/user/tasks")
 public class TaskController {
     private TaskService taskService;
     @Autowired
@@ -18,7 +19,7 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @PostMapping(path = "/user/createTask")
+    @PostMapping
     public ResponseEntity<Object> createTask(@Valid @RequestBody TaskDto taskDto){
         try{
             TaskDto registerTask = taskService.registerTask(taskDto);
@@ -28,12 +29,12 @@ public class TaskController {
         }
     }
 
-    @GetMapping(path = "/user/tasks")
+    @GetMapping
     public ResponseEntity<Object> findAllTask(){
         return taskService.findAllTasks();
     }
 
-    @PutMapping(path = "/user/updateTask")
+    @PutMapping
     public ResponseEntity<Object> updateTask(@Valid @RequestBody TaskDto taskDto){
         try{
             return this.taskService.updateTask(taskDto);
@@ -42,7 +43,7 @@ public class TaskController {
         }
     }
 
-    @DeleteMapping(path = "user/deleteTask/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<Object> deleteTaskById(@PathVariable Long id){
         try{
             return this.taskService.deleteTask(id);

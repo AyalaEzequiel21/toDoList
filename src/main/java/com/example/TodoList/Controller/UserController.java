@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("api/v1/users")
 public class UserController {
     private UserService userService;
     @Autowired
@@ -18,12 +19,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(path = "/users")
+    @GetMapping
     public ResponseEntity<Object> getUsers(){
         return this.userService.findAllUser();
     }
 
-    @GetMapping(path = "/user{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<Object> getUserById(@PathVariable Long id) {
         try{
             return userService.findUserById(id);
@@ -33,7 +34,7 @@ public class UserController {
 
     }
     //
-    @PostMapping(path = "createUser")
+    @PostMapping
     public ResponseEntity<Object> registerUser(@Valid  @RequestBody UserDto userDto){
         try {
             UserDto registeredUser = userService.registerUser(userDto);
@@ -43,7 +44,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("updateUser")
+    @PutMapping
     public ResponseEntity<Object> updateUser(@Valid @RequestBody UserDto userDto){
         try{
             return this.userService.updateUser(userDto);
@@ -52,7 +53,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping(path = "/deleteUser{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable Long id){
         try{
             return this.userService.deleteUserById(id);
