@@ -1,15 +1,9 @@
 package com.example.TodoList;
 
-import com.example.TodoList.Model.ERole;
-import com.example.TodoList.Model.Role;
-import com.example.TodoList.Model.User;
-import com.example.TodoList.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 import java.util.Set;
 
