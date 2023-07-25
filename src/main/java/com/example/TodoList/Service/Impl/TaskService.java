@@ -1,4 +1,4 @@
-package com.example.TodoList.Service;
+package com.example.TodoList.Service.Impl;
 
 import com.example.TodoList.Dto.TaskDto;
 import com.example.TodoList.Exception.ResourceNotFoundException;
@@ -6,7 +6,7 @@ import com.example.TodoList.Exception.ResourceRepeatException;
 import com.example.TodoList.Model.Task;
 import com.example.TodoList.Model.User;
 import com.example.TodoList.Repository.TaskRepository;
-import com.example.TodoList.Repository.UserRepository;
+import com.example.TodoList.Service.ITaskService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +19,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TaskService implements ITaskService{
+public class TaskService implements ITaskService {
     HashMap<String, Object> datos;
     @Autowired
     TaskRepository taskRepository;
 
-    @Autowired
-    UserRepository userRepository;
+//    @Autowired
+//    UserRepository userRepository;
 
     @Autowired
     ObjectMapper objectMapper;

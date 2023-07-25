@@ -3,7 +3,7 @@ package com.example.TodoList.Controller;
 import com.example.TodoList.Dto.TaskDto;
 import com.example.TodoList.Exception.ResourceNotFoundException;
 import com.example.TodoList.Exception.ResourceRepeatException;
-import com.example.TodoList.Service.TaskService;
+import com.example.TodoList.Service.Impl.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
