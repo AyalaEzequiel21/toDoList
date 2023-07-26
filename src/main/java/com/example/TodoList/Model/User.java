@@ -9,8 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,6 +28,10 @@ public class User {
     @NotBlank  // no puede ingresar un campo vacio
     @Size(max = 60)
     private String email;
+
+    @NotBlank
+    @Size(min = 3, max = 15)
+    private String name;
 
     @NotBlank
     private String password;
