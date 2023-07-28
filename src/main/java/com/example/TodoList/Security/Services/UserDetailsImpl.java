@@ -1,5 +1,8 @@
 package com.example.TodoList.Security.Services;
 
+import com.example.TodoList.Dto.TaskDto;
+import com.example.TodoList.Dto.UserDto;
+import com.example.TodoList.Model.Task;
 import com.example.TodoList.Model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -11,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -22,11 +26,12 @@ public class UserDetailsImpl implements UserDetails {
     private Long id;
     private String email;
     private String name;
+    private Set<TaskDto> tasks;
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public static UserDetailsImpl build(User user){
+    public static UserDetailsImpl build(UserDto user){
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
@@ -35,6 +40,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getId(),
                 user.getEmail(),
                 user.getName(),
+                user.getTasks(),
                 user.getPassword(),
                 authorities
         );
