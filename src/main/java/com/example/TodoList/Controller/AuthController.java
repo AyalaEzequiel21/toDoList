@@ -11,6 +11,7 @@ import com.example.TodoList.Repository.RoleRepository;
 import com.example.TodoList.Repository.UserRepository;
 import com.example.TodoList.Security.Jwt.JwtUtils;
 import com.example.TodoList.Security.Services.UserDetailsImpl;
+import com.example.TodoList.Utils.ConvertTasks;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -49,6 +50,9 @@ public class AuthController {
     PasswordEncoder passwordEncoder;
 
     @Autowired
+    ConvertTasks convertTasks;
+
+    @Autowired
     JwtUtils jwtUtils;
 
     @PostMapping("/login")
@@ -72,7 +76,7 @@ public class AuthController {
                         userDetails.getId(),
                         userDetails.getEmail(),
                         userDetails.getName(),
-                        userDetails.getTasks(),
+                        convertTasks.convertToDto(userDetails.getTasks()),
                         userDetails.getPassword(),
                         LocalDate.now(),
                         roles
@@ -84,20 +88,19 @@ public class AuthController {
         if (userRepository.existsByEmail(registerRequest.getEmail())){
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
         }
-
-
-        User user = new User();
-        user.setEmail(registerRequest.getEmail());
-        user.setName(registerRequest.getName());
-        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        Role userRole = roleRepository.findByName(ERole.USER)
+                .orElseGet(() -> roleRepository.save(Role.builder().name(ERole.USER).build()));
 
         Set<Role> roles = new HashSet<>();
-        
-        roles.add(Role.builder()
-                .name(ERole.USER)
-                .build());
+        roles.add(userRole);
 
-        user.setRoles(roles);
+        User user = User.builder()
+                .email(registerRequest.getEmail())
+                .name(registerRequest.getName())
+                .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .roles(roles)
+                .build();
+
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully"));

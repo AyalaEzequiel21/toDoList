@@ -1,7 +1,5 @@
 package com.example.TodoList.Security.Services;
 
-import com.example.TodoList.Dto.TaskDto;
-import com.example.TodoList.Dto.UserDto;
 import com.example.TodoList.Model.Task;
 import com.example.TodoList.Model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,12 +24,12 @@ public class UserDetailsImpl implements UserDetails {
     private Long id;
     private String email;
     private String name;
-    private Set<TaskDto> tasks;
+    private Set<Task> tasks;
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public static UserDetailsImpl build(UserDto user){
+    public static UserDetailsImpl build(User user){
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());

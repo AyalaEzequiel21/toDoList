@@ -1,6 +1,5 @@
 package com.example.TodoList.Dto;
 
-import com.example.TodoList.Model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
