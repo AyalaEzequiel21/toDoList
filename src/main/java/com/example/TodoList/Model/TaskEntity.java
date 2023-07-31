@@ -14,19 +14,18 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table
-public class Task {
+@Table(name="task")
+public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
     private String title;
     @CreationTimestamp
     private LocalDate registerDate;
     private LocalDate limitDate;
     private Integer priority;
     private String description;
-
 }

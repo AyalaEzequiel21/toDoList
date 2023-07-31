@@ -9,28 +9,28 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
-@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})}) // para indicar que el campo email debe ser unico
-public class User {
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Email
-    @NotBlank  // no puede ingresar un campo vacio
-    @Size(max = 60)
+    @NotBlank
+    @Size(max=70)
     private String email;
 
     @NotBlank
-    @Size(min = 3, max = 15)
+    @Size(max=30)
     private String name;
 
     @NotBlank
@@ -40,11 +40,9 @@ public class User {
     private LocalDate registerDate;
 
     @OneToMany(mappedBy = "user")
-    private Set<Task> tasks = new HashSet<>();
+    private Set<TaskEntity> tasks;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RoleEntity> roles;
 }

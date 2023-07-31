@@ -1,7 +1,8 @@
 package com.example.TodoList.Utils;
 
+
 import com.example.TodoList.Dto.TaskDto;
-import com.example.TodoList.Model.Task;
+import com.example.TodoList.Model.TaskEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,9 +16,9 @@ public class ConvertTasks {
     @Autowired
     ObjectMapper objectMapper;
 
-    public Set<TaskDto> convertToDto(Set<Task> tasks){
+    public Set<TaskDto> convertToDto(Set<TaskEntity> tasks){
         Set<TaskDto> tasksDto = new HashSet<>();
-        for (Task task : tasks){
+        for (TaskEntity task : tasks){
             tasksDto.add(objectMapper.convertValue(task, TaskDto.class));
         }
         return tasksDto;
