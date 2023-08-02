@@ -24,11 +24,11 @@ import java.util.Map;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    @Autowired
     private JwtUtils jwtUtils;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    public JwtAuthenticationFilter(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String username = "";
         String password = "";
         try{
-            userEntity = objectMapper.readValue(request.getInputStream(), UserEntity.class);
+            userEntity =new ObjectMapper().readValue(request.getInputStream(), UserEntity.class);
             username = userEntity.getEmail();
             password = userEntity.getPassword();
         } catch (StreamReadException e) {
@@ -69,7 +69,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         httResponse.put("Message", "Authentication Successful");
         httResponse.put("User: ", user.getUsername());
 
-        response.getWriter().write(objectMapper.writeValueAsString(httResponse));
+        response.getWriter().write(new ObjectMapper().writeValueAsString(httResponse));
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().flush();

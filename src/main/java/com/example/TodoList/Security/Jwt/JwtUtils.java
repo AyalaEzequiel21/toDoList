@@ -23,7 +23,7 @@ import java.util.function.Function;
 public class JwtUtils {
 
     @Value("${jwt.secret.key}")
-    private String secretKey;
+    private String Key;
 
     @Value("${jwt.time.expiration}")
     private String timeExpiration;
@@ -31,11 +31,13 @@ public class JwtUtils {
     @Value("${jwt.app.jwtCookieName}")
     private String jwtCookie;
 
+    Key secureKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
     //Get Signature
-    public Key getSignatureKey(){
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
+//    public Key getSignatureKey(){
+//        byte[] keyBytes = Decoders.BASE64.decode(secureKey);
+//        return Keys.hmacShaKeyFor(keyBytes);
+//    }
 
     //Generate Access JWT
     public String generateToken(String email){
@@ -43,7 +45,7 @@ public class JwtUtils {
                 .setSubject(email)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(timeExpiration)))
-                .signWith(getSignatureKey(), SignatureAlgorithm.HS256)
+                .signWith(secureKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -51,7 +53,7 @@ public class JwtUtils {
     public boolean isTokenValid(String token){
         try{
             Jwts.parserBuilder()
-                    .setSigningKey(getSignatureKey())
+                    .setSigningKey(secureKey)
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
@@ -65,7 +67,7 @@ public class JwtUtils {
     //Get all claims from token
     public Claims extractAllClaims(String token){
         return Jwts.parserBuilder()
-                .setSigningKey(getSignatureKey())
+                .setSigningKey(secureKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
